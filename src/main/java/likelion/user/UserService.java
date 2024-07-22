@@ -2,6 +2,8 @@ package likelion.user;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -11,4 +13,7 @@ public class UserService {
         this.userRepository=userRepository;
     }
 
+    public List<User> findAllList(){
+        return userRepository.findAll();
+    }
 }

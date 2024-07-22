@@ -10,18 +10,30 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "friend")
 public class Friend {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long friendshipId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "friend_id")
     private User friend;
 
+    public User getFriend() {
+        return friend;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Long getFriendshipId() {
+        return friendshipId;
+    }
 }

@@ -4,13 +4,13 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "user")
 public class User {
 
     @Id
@@ -27,16 +27,10 @@ public class User {
     private String userImage;
 
     @Column(nullable = false)
-    private String userAddress;//주소
-
-    @Column(nullable = false)
     private Float latitude;//위도
 
     @Column(nullable = false)
     private Float longitude;//경도
-
-    @Column(nullable = false)
-    private Integer zipCode;//우편번호
 
     private Integer totalChuru;
 
@@ -47,6 +41,7 @@ public class User {
     private Integer totalVisits;
 
     private LocalDateTime createdDate;
+
 
     @PrePersist
     protected void onCreate() {
