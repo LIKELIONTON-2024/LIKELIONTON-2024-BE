@@ -28,7 +28,7 @@ public class GoogleOauthController {
 	@Value("${google.redirect.uri}")
 	private String googleRedirectUri;
 
-	@GetMapping("/oauth2/google/redirect")
+	@GetMapping("/oauth2/google/login")
 	public String redirectGoogleLogin() {
 		StringBuilder reqUrl = new StringBuilder("https://accounts.google.com/o/oauth2/v2/auth");
 		reqUrl.append("?client_id=").append(googleClientId)
@@ -39,8 +39,9 @@ public class GoogleOauthController {
 		return reqUrl.toString();
 	}
 
-	@GetMapping("/oauth2/code/google")
+	@GetMapping("/oauth2/google/user")
 	public ResponseEntity<GoogleUserInfoResponse> getGoogleUserInfo(@RequestParam(value = "code") String authCode) {
+		System.out.println(authCode);
 		RestTemplate restTemplate = new RestTemplate();
 		GoogleRequest googleOAuthRequestParam = new GoogleRequest(
 			googleClientId,

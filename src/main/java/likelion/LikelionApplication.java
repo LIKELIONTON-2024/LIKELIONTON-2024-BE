@@ -8,6 +8,5 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 public class LikelionApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LikelionApplication.class, args);
-		System.out.println("HELLO WORLD!");
 	}
 }
