@@ -12,16 +12,9 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-    private final UserRepository userRepository;
 
-    public UserController(UserService userService,UserRepository userRepository) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.userRepository=userRepository;
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<User>> all(){
-        List<User> a=userService.findAllList();
-        return ResponseEntity.ok(a);
-    }
 }

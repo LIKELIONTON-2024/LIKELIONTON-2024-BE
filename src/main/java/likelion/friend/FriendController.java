@@ -23,4 +23,5 @@ public class FriendController {
     public List<User> getFriendsByUserId(@PathVariable Long userId) {
         return friendService.getFriendsByUserId(userId);
     }
+
 }

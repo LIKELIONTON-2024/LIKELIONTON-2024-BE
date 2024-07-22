@@ -25,15 +25,4 @@ public class Friend {
     @JoinColumn(name = "friend_id")
     private User friend;
 
-    public User getFriend() {
-        return friend;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public Long getFriendshipId() {
-        return friendshipId;
-    }
 }
