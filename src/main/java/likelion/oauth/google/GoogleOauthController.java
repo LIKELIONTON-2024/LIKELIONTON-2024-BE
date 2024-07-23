@@ -41,7 +41,6 @@ public class GoogleOauthController {
 
 	@GetMapping("/oauth2/google/user")
 	public ResponseEntity<GoogleUserInfoResponse> getGoogleUserInfo(@RequestParam(value = "code") String authCode) {
-		System.out.println(authCode);
 		RestTemplate restTemplate = new RestTemplate();
 		GoogleRequest googleOAuthRequestParam = new GoogleRequest(
 			googleClientId,
@@ -65,7 +64,6 @@ public class GoogleOauthController {
 			map,
 			GoogleUserInfoResponse.class
 		);
-
 		return googleUserInfo;
 	}
 }
