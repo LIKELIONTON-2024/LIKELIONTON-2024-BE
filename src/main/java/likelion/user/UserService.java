@@ -23,7 +23,10 @@ public class UserService {
 		User user = User.createUser(request.email(), request.nickname(), request.latitude(), request.longitude());
 		userRepository.save(user);
 		String token = jwtTokenUtil.generateToken(user.getUserId(), user.getNickname(), user.getEmail());
-		System.out.println(token);
 		return UserJoinResponse.from(user, token);
+	}
+
+	public User findByEmail(String email) {
+		return userRepository.findByEmail(email);
 	}
 }
