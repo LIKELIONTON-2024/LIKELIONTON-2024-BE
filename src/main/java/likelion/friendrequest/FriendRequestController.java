@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/friendrequest")
+@RequestMapping("/friend-request")
 public class FriendRequestController {
 
     private final FriendRequestService friendRequestService;

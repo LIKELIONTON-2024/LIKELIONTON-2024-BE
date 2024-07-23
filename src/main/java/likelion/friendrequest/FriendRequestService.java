@@ -58,10 +58,15 @@ public class FriendRequestService {
         FriendRequest friendRequest = friendRequestRepository.findBySenderUserIdAndReceiverUserIdAndStatus(senderId, receiverId, "PENDING")
                 .orElseThrow(() -> new IllegalArgumentException("Invalid request or request already accepted/rejected"));
 
-        Friend friend=new Friend();
-        friend.setUser(friendRequest.getReceiver());
-        friend.setFriend(friendRequest.getSender());
-        friendRepository.save(friend);
+        Friend friend1=new Friend();
+        friend1.setUser(friendRequest.getReceiver());
+        friend1.setFriend(friendRequest.getSender());
+        friendRepository.save(friend1);
+
+        Friend friend2=new Friend();
+        friend2.setUser(friendRequest.getSender());
+        friend2.setFriend(friendRequest.getReceiver());
+        friendRepository.save(friend2);
 
         friendRequestRepository.delete(friendRequest);
         return true;
