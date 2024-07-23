@@ -1,9 +1,6 @@
 package likelion.friend;
 
 import likelion.user.User;
-import likelion.user.UserService;
-import org.hibernate.annotations.Parameter;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,12 +17,15 @@ public class FriendController {
     }
 
     @GetMapping("/list/{userId}")
-    public List<User> getFriendsByUserId(@PathVariable Long userId) {
-        return friendService.getFriendsByUserId(userId);
+    public ResponseEntity<List<User>>getFriendsByUserId(@PathVariable Long userId) {
+        List<User> friendList=friendService.getFriendsByUserId(userId);
+        return ResponseEntity.ok(friendList);
     }
 
     @GetMapping("/list")
-    public List<User> searchUserNickname(@RequestParam String searchKeyword){
-        return friendService.getUsersBySearchKeyword(searchKeyword);
+    public ResponseEntity<List<User>> searchUserNickname(@RequestParam String searchKeyword){
+        List<User> searchFriendList=friendService.getUsersBySearchKeyword(searchKeyword);
+        return ResponseEntity.ok(searchFriendList);
     }
+
 }

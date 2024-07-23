@@ -1,4 +1,4 @@
-package likelion.user;
+package likelion.user.dto;
 
 import java.time.LocalDateTime;
 
