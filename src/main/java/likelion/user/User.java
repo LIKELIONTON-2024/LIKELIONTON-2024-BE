@@ -29,16 +29,18 @@ public class User {
 	private String nickname;
 
 	@Column(nullable = false)
-	private Float latitude;//위도
+	private Float latitude;
 
 	@Column(nullable = false)
-	private Float longitude;//경도
+	private Float longitude;
 
-	private String userImage;
+	@Column(nullable = false)
+	private String userImage =
+		"https://likelion-hikikomori.s3.ap-northeast-2.amazonaws.com/basic.png";
 
-	private String userAddress;//주소
+	private String userAddress;
 
-	private Integer zipCode;//우편번호
+	private Integer zipCode;
 
 	private Integer totalChuru;
 

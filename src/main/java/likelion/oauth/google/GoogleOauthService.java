@@ -79,9 +79,9 @@ public class GoogleOauthService {
 
 		if (user != null) {
 			String token = jwtTokenUtil.generateToken(user.getUserId(), user.getNickname(), user.getEmail());
-			return GoogleUserInfoResponse.from(email, name, token, user, true);
+			return GoogleUserInfoResponse.from(email, name, token, true);
 		} else {
-			return GoogleUserInfoResponse.from(email, name, null, null, false);
+			return GoogleUserInfoResponse.from(email, name, null, false);
 		}
 	}
 }
