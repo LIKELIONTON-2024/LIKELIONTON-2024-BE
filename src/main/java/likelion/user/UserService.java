@@ -1,7 +1,9 @@
 package likelion.user;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import likelion.auth.JwtTokenUtil;
 import likelion.user.dto.UserJoinRequest;
 import likelion.user.dto.UserJoinResponse;
 
@@ -9,14 +11,19 @@ import likelion.user.dto.UserJoinResponse;
 public class UserService {
 
 	private final UserRepository userRepository;
+	private final JwtTokenUtil jwtTokenUtil;
 
-	public UserService(UserRepository userRepository) {
+	@Autowired
+	public UserService(UserRepository userRepository, JwtTokenUtil jwtTokenUtil) {
 		this.userRepository = userRepository;
+		this.jwtTokenUtil = jwtTokenUtil;
 	}
 
 	public UserJoinResponse join(UserJoinRequest request) {
 		User user = User.createUser(request.email(), request.nickname(), request.latitude(), request.longitude());
 		userRepository.save(user);
-		return UserJoinResponse.from(user);
+		String token = jwtTokenUtil.generateToken(user.getUserId(), user.getNickname(), user.getEmail());
+		System.out.println(token);
+		return UserJoinResponse.from(user, token);
 	}
 }
