@@ -3,10 +3,12 @@ package likelion.oauth.google.dto;
 public record GoogleUserInfoResponse(
 	String email,
 	String name,
-	String token,
+	String accessToken,
+	String refreshToken,
 	boolean isJoined
 ) {
-	public static GoogleUserInfoResponse from(String email, String name, String token, boolean isJoined) {
-		return new GoogleUserInfoResponse(email, name, token, isJoined);
+	public static GoogleUserInfoResponse from(String email, String name, String accessToken, String refreshToken,
+		boolean isJoined) {
+		return new GoogleUserInfoResponse(email, name, accessToken, refreshToken, isJoined);
 	}
 }

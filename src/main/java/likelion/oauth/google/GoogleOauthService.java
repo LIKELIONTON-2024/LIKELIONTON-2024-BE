@@ -78,10 +78,12 @@ public class GoogleOauthService {
 		User user = userService.findByEmail(email);
 
 		if (user != null) {
-			String token = jwtTokenUtil.generateToken(user.getUserId(), user.getNickname(), user.getEmail());
-			return GoogleUserInfoResponse.from(email, name, token, true);
+			Map<String, String> tokens = jwtTokenUtil.generateTokens(user.getUserId(), user.getNickname(),
+				user.getEmail());
+			return GoogleUserInfoResponse.from(email, name, tokens.get("accessToken"), tokens.get("refreshToken"),
+				true);
 		} else {
-			return GoogleUserInfoResponse.from(email, name, null, false);
+			return GoogleUserInfoResponse.from(email, name, null, null, false);
 		}
 	}
 }

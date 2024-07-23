@@ -5,14 +5,19 @@ import likelion.user.User;
 public record UserJoinResponse(
 	Long id,
 	String nickname,
-	String userImage,
 	Float latitude,
 	Float longitude,
-	String token
+	String accessToken,
+	String refreshToken
 ) {
-	public static UserJoinResponse from(User user, String token) {
-		return new UserJoinResponse(user.getUserId(), user.getNickname(), user.getUserImage(), user.getLatitude(),
+	public static UserJoinResponse from(User user, String accessToken, String refreshToken) {
+		return new UserJoinResponse(
+			user.getUserId(),
+			user.getNickname(),
+			user.getLatitude(),
 			user.getLongitude(),
-			token);
+			accessToken,
+			refreshToken
+		);
 	}
 }

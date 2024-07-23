@@ -33,19 +33,40 @@ public class JwtTokenUtil {
 		return getClaimFromToken(token, Claims::getSubject);
 	}
 
-	public String generateToken(Long userId, String nickname, String email) {
+	public Map<String, String> generateTokens(Long userId, String nickname, String email) {
 		Map<String, Object> claims = new HashMap<>();
 		claims.put("nickname", nickname);
 		claims.put("email", email);
-		return createToken(claims, userId.toString());
+		String accessToken = generateAccessToken(claims, userId.toString());
+		String refreshToken = generateRefreshToken(userId);
+		Map<String, String> tokens = new HashMap<>();
+		tokens.put("accessToken", accessToken);
+		tokens.put("refreshToken", refreshToken);
+		return tokens;
 	}
 
-	private String createToken(Map<String, Object> claims, String subject) {
+	public String generateAccessToken(Map<String, Object> claims, String subject) {
 		return Jwts.builder()
 			.setClaims(claims)
 			.setSubject(subject)
 			.setIssuedAt(new Date(System.currentTimeMillis()))
 			.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+			.signWith(key)
+			.compact();
+	}
+
+	public String generateAccessToken(Long userId, String nickname, String email) {
+		Map<String, Object> claims = new HashMap<>();
+		claims.put("nickname", nickname);
+		claims.put("email", email);
+		return generateAccessToken(claims, userId.toString());
+	}
+
+	public String generateRefreshToken(Long userId) {
+		return Jwts.builder()
+			.setSubject(userId.toString())
+			.setIssuedAt(new Date(System.currentTimeMillis()))
+			.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 7))
 			.signWith(key)
 			.compact();
 	}
