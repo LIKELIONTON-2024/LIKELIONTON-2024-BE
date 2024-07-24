@@ -1,13 +1,7 @@
 package likelion.user;
 
 import java.time.LocalDateTime;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "user")
 public class User {
 
 	@Id
@@ -52,10 +47,12 @@ public class User {
 
 	private LocalDateTime createdDate;
 
-	@PrePersist
-	protected void onCreate() {
-		this.createdDate = LocalDateTime.now();
-	}
+    private LocalDateTime lastVerifiedDate;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdDate = LocalDateTime.now();
+    }
 
 	public User(String email, String nickname, Float latitude, Float longitude) {
 		this.email = email;

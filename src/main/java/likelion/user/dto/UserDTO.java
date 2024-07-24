@@ -13,5 +13,5 @@ public record UserDTO(
 	Integer zipCode,//우편번호
 	LocalDateTime createdDate
 
-) {
-}
+) {}
+

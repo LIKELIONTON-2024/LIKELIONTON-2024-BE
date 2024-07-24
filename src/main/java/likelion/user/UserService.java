@@ -1,10 +1,9 @@
 package likelion.user;
 
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import likelion.user.dto.UserResponseDTO;
 import org.springframework.stereotype.Service;
-
+import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
 import likelion.auth.JwtTokenUtil;
 import likelion.user.dto.UserJoinRequest;
 import likelion.user.dto.UserJoinResponse;
@@ -20,6 +19,12 @@ public class UserService {
 		this.userRepository = userRepository;
 		this.jwtTokenUtil = jwtTokenUtil;
 	}
+
+    public UserResponseDTO getFreiendProfileByFriendId(Long friendId){
+        User user=userRepository.findById(friendId).orElseThrow(() -> new IllegalArgumentException("User not found with id: " + friendId));
+
+        return new UserResponseDTO(user.getUserId(), user.getNickname(), user.getUserImage(), user.getLastVerifiedDate());
+    }
 
 	public UserJoinResponse join(UserJoinRequest request) {
 		User user = User.createUser(request.email(), request.nickname(), request.latitude(), request.longitude());
