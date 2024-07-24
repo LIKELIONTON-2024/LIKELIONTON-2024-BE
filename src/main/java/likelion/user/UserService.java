@@ -24,9 +24,8 @@ public class UserService {
 	public UserJoinResponse join(UserJoinRequest request) {
 		User user = User.createUser(request.email(), request.nickname(), request.latitude(), request.longitude());
 		userRepository.save(user);
-
 		Map<String, String> tokens = jwtTokenUtil.generateTokens(user.getUserId(), user.getNickname(), user.getEmail());
-		return UserJoinResponse.from(user, tokens.get("accessToken"), tokens.get("refreshToken"));
+		return UserJoinResponse.from(tokens.get("accessToken"), tokens.get("refreshToken"));
 	}
 
 	public User findByEmail(String email) {
