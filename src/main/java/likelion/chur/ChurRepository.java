@@ -9,5 +9,4 @@ import java.time.LocalDateTime;
 public interface ChurRepository extends JpaRepository<Chur,Long> {
 
     boolean existsBySenderAndReceiverAndSendDateBetween(User sender, User receiver, LocalDateTime start, LocalDateTime end);
-
 }

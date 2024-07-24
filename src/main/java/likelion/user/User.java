@@ -1,10 +1,10 @@
 package likelion.user;
 
+import java.time.LocalDateTime;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -13,41 +13,55 @@ import java.time.LocalDateTime;
 @Table(name = "user")
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long userId;
 
-    @Column(nullable = false, unique = true)
-    private String email;
+	@Column(nullable = false, unique = true)
+	private String email;
 
-    @Column(nullable = false)
-    private String nickname;
+	@Column(nullable = false)
+	private String nickname;
 
-    @Column(nullable = false)
-    private String userImage;
+	@Column(nullable = false)
+	private Float latitude;
 
-    @Column(nullable = false)
-    private Float latitude;//위도
+	@Column(nullable = false)
+	private Float longitude;
 
-    @Column(nullable = false)
-    private Float longitude;//경도
+	@Column(nullable = false)
+	private String userImage =
+		"https://likelion-hikikomori.s3.ap-northeast-2.amazonaws.com/basic.png";
 
-    private Integer totalChuru;
+	private String userAddress;
 
-    private Float totalDistance;
+	private Integer zipCode;
 
-    private Integer totalSpots;
+	private Integer totalChuru;
 
-    private Integer totalVisits;
+	private Float totalDistance;
 
-    private LocalDateTime createdDate;
+	private Integer totalSpots;
+
+	private Integer totalVisits;
+
+	private LocalDateTime createdDate;
 
     private LocalDateTime lastVerifiedDate;
-
 
     @PrePersist
     protected void onCreate() {
         this.createdDate = LocalDateTime.now();
     }
 
+	public User(String email, String nickname, Float latitude, Float longitude) {
+		this.email = email;
+		this.nickname = nickname;
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
+
+	public static User createUser(String email, String nickname, Float latitude, Float longitude) {
+		return new User(email, nickname, latitude, longitude);
+	}
 }

@@ -2,6 +2,7 @@ package likelion.chur;
 
 import likelion.user.User;
 import likelion.user.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ public class ChurService {
     private final ChurRepository churRepository;
     private final UserRepository userRepository;
 
+    @Autowired
     public ChurService(ChurRepository churRepository,UserRepository userRepository){
         this.churRepository=churRepository;
         this.userRepository=userRepository;
@@ -39,5 +41,4 @@ public class ChurService {
 
         return true;
     }
-
 }

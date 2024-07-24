@@ -4,6 +4,7 @@ import likelion.friend.Friend;
 import likelion.friend.FriendRepository;
 import likelion.user.User;
 import likelion.user.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,6 +17,7 @@ public class FriendRequestService {
     private final FriendRepository friendRepository;
     private final UserRepository userRepository;
 
+    @Autowired
     public FriendRequestService(FriendRequestRepository friendRequestRepository,FriendRepository friendRepository,UserRepository userRepository){
         this.friendRequestRepository=friendRequestRepository;
         this.friendRepository = friendRepository;
@@ -79,5 +81,4 @@ public class FriendRequestService {
         friendRequestRepository.delete(friendRequest);
         return true;
     }
-
 }

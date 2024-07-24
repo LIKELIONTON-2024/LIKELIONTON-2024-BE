@@ -1,7 +1,9 @@
 package likelion.friend;
 
 import jakarta.persistence.EntityNotFoundException;
+import likelion.auth.JwtTokenUtil;
 import likelion.user.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,25 +15,38 @@ import java.util.List;
 public class FriendController {
 
     private final FriendService friendService;
+    private final JwtTokenUtil jwtTokenUtil;
 
-    public FriendController(FriendService friendService){
+    @Autowired
+    public FriendController(FriendService friendService,JwtTokenUtil jwtTokenUtil){
         this.friendService=friendService;
+        this.jwtTokenUtil=jwtTokenUtil;
     }
 
-    @GetMapping("/list/{userId}")
-    public ResponseEntity<List<User>>getFriendsByUserId(@PathVariable Long userId) {
+    @GetMapping("/list")
+    public ResponseEntity<List<User>>getFriendsByUserId(@RequestHeader("Authorization") String token) {
+        String jwtToken = token.substring(7);
+
+        String userIdStr = jwtTokenUtil.getUserIdFromToken(jwtToken);
+        Long userId = Long.parseLong(userIdStr);
+
         List<User> friendList=friendService.getFriendsByUserId(userId);
         return ResponseEntity.ok(friendList);
     }
 
-    @GetMapping("/list")
+    @GetMapping("/list/search")
     public ResponseEntity<List<User>> searchUserNickname(@RequestParam String searchKeyword){
         List<User> searchFriendList=friendService.getUsersBySearchKeyword(searchKeyword);
         return ResponseEntity.ok(searchFriendList);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<String> deleteFriendFromList(@RequestParam Long friendId, @RequestParam Long userId){
+    public ResponseEntity<String> deleteFriendFromList(@RequestParam Long friendId, @RequestHeader("Authorization") String token){
+        String jwtToken = token.substring(7);
+
+        String userIdStr = jwtTokenUtil.getUserIdFromToken(jwtToken);
+        Long userId = Long.parseLong(userIdStr);
+
         try {
             friendService.deleteFriendFromList(friendId, userId);
             return ResponseEntity.ok("Friend removed successfully.");
@@ -41,5 +56,4 @@ public class FriendController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while removing the friend.");
         }
     }
-
 }

@@ -34,5 +34,4 @@ public class FriendRequest {
     protected void onCreate() {
         this.createdDate = LocalDateTime.now();
     }
-
 }

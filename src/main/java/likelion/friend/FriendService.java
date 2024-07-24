@@ -3,6 +3,7 @@ package likelion.friend;
 import jakarta.persistence.EntityNotFoundException;
 import likelion.user.User;
 import likelion.user.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +14,7 @@ public class FriendService {
     private final FriendRepository friendRepository;
     private final UserRepository userRepository;
 
+    @Autowired
     public FriendService(FriendRepository friendRepository,UserRepository userRepository){
         this.friendRepository=friendRepository;
         this.userRepository=userRepository;
@@ -39,5 +41,4 @@ public class FriendService {
         friendRepository.delete(friendRelation1);
         friendRepository.delete(friendRelation2);
     }
-
 }

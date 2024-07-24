@@ -1,5 +1,7 @@
 package likelion.friendrequest;
 
+import likelion.auth.JwtTokenUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,18 +11,31 @@ import org.springframework.web.bind.annotation.*;
 public class FriendRequestController {
 
     private final FriendRequestService friendRequestService;
+    private final JwtTokenUtil jwtTokenUtil;
 
-    public FriendRequestController(FriendRequestService friendRequestService){
+    @Autowired
+    public FriendRequestController(FriendRequestService friendRequestService,JwtTokenUtil jwtTokenUtil){
         this.friendRequestService=friendRequestService;
+        this.jwtTokenUtil=jwtTokenUtil;
     }
 
     @GetMapping("/status")
-    public ResponseEntity<String> getFriendRequestStatus(@RequestParam Long userId, @RequestParam Long friendId) {
+    public ResponseEntity<String> getFriendRequestStatus(@RequestHeader("Authorization") String token, @RequestParam Long friendId) {
+        String jwtToken = token.substring(7);
+
+        String userIdStr = jwtTokenUtil.getUserIdFromToken(jwtToken);
+        Long userId = Long.parseLong(userIdStr);
+
         return ResponseEntity.ok(friendRequestService.getFriendRequestStatus(userId, friendId));
     }
 
     @PostMapping("/send")
-    public ResponseEntity<String> sendFriendRequest(@RequestParam Long senderId, @RequestParam Long receiverId){
+    public ResponseEntity<String> sendFriendRequest(@RequestHeader("Authorization") String token, @RequestParam Long receiverId){
+        String jwtToken = token.substring(7);
+
+        String userIdStr = jwtTokenUtil.getUserIdFromToken(jwtToken);
+        Long senderId = Long.parseLong(userIdStr);
+
         Boolean isSent=friendRequestService.sendFriendRequest(senderId,receiverId);
         if (isSent) {
             return ResponseEntity.ok("Friend request sent successfully.");
@@ -30,7 +45,12 @@ public class FriendRequestController {
     }
 
     @PostMapping("/accept")
-    public ResponseEntity<String> acceptFriendRequest(@RequestParam Long senderId, @RequestParam Long receiverId){
+    public ResponseEntity<String> acceptFriendRequest(@RequestParam Long senderId, @RequestHeader("Authorization") String token){
+        String jwtToken = token.substring(7);
+
+        String userIdStr = jwtTokenUtil.getUserIdFromToken(jwtToken);
+        Long receiverId = Long.parseLong(userIdStr);
+
         Boolean isAccepted=friendRequestService.acceptFriendRequest(senderId,receiverId);
         if (isAccepted) {
             return ResponseEntity.ok("Friend request accepted successfully.");
@@ -40,7 +60,12 @@ public class FriendRequestController {
     }
 
     @DeleteMapping("/reject")
-    public ResponseEntity<String> rejectFriendRequest(@RequestParam Long senderId, @RequestParam Long receiverId){
+    public ResponseEntity<String> rejectFriendRequest(@RequestParam Long senderId, @RequestHeader("Authorization") String token){
+        String jwtToken = token.substring(7);
+
+        String userIdStr = jwtTokenUtil.getUserIdFromToken(jwtToken);
+        Long receiverId = Long.parseLong(userIdStr);
+
         boolean isDeleted = friendRequestService.deleteFriendRequest(senderId, receiverId);
         if (isDeleted) {
             return ResponseEntity.ok("Friend request deleted successfully.");
@@ -48,5 +73,4 @@ public class FriendRequestController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to delete friend request.");
         }
     }
-
 }
