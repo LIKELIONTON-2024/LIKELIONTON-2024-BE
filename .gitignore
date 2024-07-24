@@ -1,3 +1,4 @@
+### Gradle ###
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
@@ -36,5 +37,4 @@ out/
 .vscode/
 
 # Ensure specific important files are included
-!application.properties
 !build.gradle
