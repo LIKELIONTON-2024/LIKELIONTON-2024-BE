@@ -1,8 +1,8 @@
-package likelion.friendrequest;
+package likelion.friendrequest.dto;
 
 import java.time.LocalDateTime;
 
-public record FriendRequestDTO(
+public record FriendRequest(
 
         Long senderId,
         Long receiverId,

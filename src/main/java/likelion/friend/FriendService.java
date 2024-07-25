@@ -1,6 +1,7 @@
 package likelion.friend;
 
 import jakarta.persistence.EntityNotFoundException;
+import likelion.friend.dto.FriendListResponse;
 import likelion.user.User;
 import likelion.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +21,26 @@ public class FriendService {
         this.userRepository=userRepository;
     }
 
-    public List<User> getFriendsByUserId(Long userId) {
+    public List<FriendListResponse> getFriendsByUserId(Long userId) {
         List<Friend> myFriends=friendRepository.findByUserUserId(userId);
         return myFriends.stream()
-                .map(Friend::getFriend)
+                .map(friend -> new FriendListResponse(
+                        friend.getFriend().getUserId(),
+                        friend.getFriend().getNickname(),
+                        friend.getFriend().getUserImage()
+                ))
                 .collect(Collectors.toList());
     }
 
-    public List<User> getUsersBySearchKeyword(String searchKeyword){
-        return userRepository.findByNicknameIsContaining(searchKeyword);
+    public List<FriendListResponse> getUsersBySearchKeyword(String searchKeyword) {
+        List<User> users = userRepository.findByNicknameIsContaining(searchKeyword);
+        return users.stream()
+                .map(user -> new FriendListResponse(
+                        user.getUserId(),
+                        user.getNickname(),
+                        user.getUserImage()
+                ))
+                .collect(Collectors.toList());
     }
 
     public void deleteFriendFromList(Long friendId,Long userId){

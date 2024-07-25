@@ -1,6 +1,6 @@
 package likelion.user;
 
-import likelion.user.dto.UserResponseDTO;
+import likelion.user.dto.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +27,8 @@ public class UserController {
 	}
 
     @GetMapping("/profile/{friendId}")
-    public ResponseEntity<UserResponseDTO> getFriendProfile(@PathVariable Long friendId){
-        UserResponseDTO friendFrofile=userService.getFreiendProfileByFriendId(friendId);
+    public ResponseEntity<UserResponse> getFriendProfile(@PathVariable Long friendId){
+        UserResponse friendFrofile=userService.getFreiendProfileByFriendId(friendId);
         return ResponseEntity.ok(friendFrofile);
     }
 

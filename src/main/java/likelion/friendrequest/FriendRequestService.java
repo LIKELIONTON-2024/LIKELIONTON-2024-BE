@@ -2,12 +2,15 @@ package likelion.friendrequest;
 
 import likelion.friend.Friend;
 import likelion.friend.FriendRepository;
+import likelion.friendrequest.dto.FriendRequestListResponse;
 import likelion.user.User;
 import likelion.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -34,6 +37,20 @@ public class FriendRequestService {
             return "PENDING";
 
         return "NONE";
+    }
+
+    public List<FriendRequestListResponse> getFriendRequestList(Long receiverId) {
+        List<FriendRequest> friendRequests = friendRequestRepository.findByReceiverUserId(receiverId);
+        return friendRequests.stream()
+                .map(request -> {
+                    User sender = request.getSender();
+                    return new FriendRequestListResponse(
+                            sender.getUserId(),
+                            sender.getNickname(),
+                            sender.getUserImage()
+                    );
+                })
+                .collect(Collectors.toList());
     }
 
     public Boolean sendFriendRequest(Long senderId, Long receiverId){
