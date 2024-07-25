@@ -2,7 +2,7 @@ package likelion.user.dto;
 
 import java.time.LocalDateTime;
 
-public record UserResponseDTO (
+public record UserResponse(
 
         Long userId,
         String nickname,

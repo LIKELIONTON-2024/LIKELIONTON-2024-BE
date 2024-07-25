@@ -1,6 +1,6 @@
-package likelion.friend;
+package likelion.friend.dto;
 
-public record FriendDTO(
+public record Friend(
 
         Long userId,
         Long friendId

@@ -2,7 +2,7 @@ package likelion.friend;
 
 import jakarta.persistence.EntityNotFoundException;
 import likelion.auth.JwtTokenUtil;
-import likelion.user.User;
+import likelion.friend.dto.FriendListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,19 +24,19 @@ public class FriendController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<User>>getFriendsByUserId(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<List<FriendListResponse>>getFriendsByUserId(@RequestHeader("Authorization") String token) {
         String jwtToken = token.substring(7);
 
         String userIdStr = jwtTokenUtil.getUserIdFromToken(jwtToken);
         Long userId = Long.parseLong(userIdStr);
 
-        List<User> friendList=friendService.getFriendsByUserId(userId);
+        List<FriendListResponse> friendList=friendService.getFriendsByUserId(userId);
         return ResponseEntity.ok(friendList);
     }
 
     @GetMapping("/list/search")
-    public ResponseEntity<List<User>> searchUserNickname(@RequestParam String searchKeyword){
-        List<User> searchFriendList=friendService.getUsersBySearchKeyword(searchKeyword);
+    public ResponseEntity<List<FriendListResponse>> searchUserNickname(@RequestParam String searchKeyword){
+        List<FriendListResponse> searchFriendList=friendService.getUsersBySearchKeyword(searchKeyword);
         return ResponseEntity.ok(searchFriendList);
     }
 

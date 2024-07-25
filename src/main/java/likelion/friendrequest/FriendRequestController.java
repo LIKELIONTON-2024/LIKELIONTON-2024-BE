@@ -1,10 +1,13 @@
 package likelion.friendrequest;
 
 import likelion.auth.JwtTokenUtil;
+import likelion.friendrequest.dto.FriendRequestListResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/friend-request")
@@ -27,6 +30,17 @@ public class FriendRequestController {
         Long userId = Long.parseLong(userIdStr);
 
         return ResponseEntity.ok(friendRequestService.getFriendRequestStatus(userId, friendId));
+    }
+
+   @GetMapping("/list")
+    public ResponseEntity<List<FriendRequestListResponse>> getFriendRequestList(@RequestHeader("Authorization") String token){
+        String jwtToken = token.substring(7);
+
+        String userIdStr = jwtTokenUtil.getUserIdFromToken(jwtToken);
+        Long receiverId = Long.parseLong(userIdStr);
+
+       List<FriendRequestListResponse> friendRequestList = friendRequestService.getFriendRequestList(receiverId);
+       return ResponseEntity.ok(friendRequestList);
     }
 
     @PostMapping("/send")

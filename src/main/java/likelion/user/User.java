@@ -52,6 +52,7 @@ public class User {
     @PrePersist
     protected void onCreate() {
         this.createdDate = LocalDateTime.now();
+		this.lastVerifiedDate=LocalDateTime.now();
     }
 
 	public User(String email, String nickname, Float latitude, Float longitude) {
