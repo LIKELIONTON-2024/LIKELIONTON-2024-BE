@@ -36,5 +36,8 @@ out/
 ### VS Code ###
 .vscode/
 
+#Env
+.env
+
 # Ensure specific important files are included
 !build.gradle
