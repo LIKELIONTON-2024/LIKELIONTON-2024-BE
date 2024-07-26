@@ -21,7 +21,6 @@ public class GoogleOauthController {
 
 	@GetMapping("/oauth2/google/login")
 	public String redirectGoogleLogin() {
-		System.out.println("로그인 페이지 얻기 API 호출됨");
 		return googleOauthService.getGoogleLoginUrl();
 	}
 

@@ -35,7 +35,6 @@ public class UserController {
 
 	@PostMapping("/join")
 	public UserJoinResponse join(@RequestBody UserJoinRequest request) {
-		System.out.println("회원가입 API 호출됨!");
 		return userService.join(request);
 	}
 }
