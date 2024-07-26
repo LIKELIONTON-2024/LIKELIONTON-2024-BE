@@ -30,6 +30,9 @@ public class UserService {
 	}
 
 	public UserJoinResponse join(UserJoinRequest request) {
+		if (userRepository.findByEmail(request.email()) != null) {
+			throw new IllegalArgumentException("유저가 이미 존재합니다.");
+		}
 		User user = User.createUser(request.email(), request.nickname(), request.zipCode());
 		userRepository.save(user);
 		Map<String, String> tokens = jwtTokenUtil.generateTokens(user.getUserId(), user.getNickname(), user.getEmail());
