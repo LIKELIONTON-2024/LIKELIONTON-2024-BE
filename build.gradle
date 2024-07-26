@@ -28,6 +28,8 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
     implementation 'org.hibernate:hibernate-core:6.5.2.Final'
     implementation 'org.projectlombok:lombok:1.18.26'
+    //  env 읽기 의존성
+    implementation 'io.github.cdimascio:java-dotenv:5.2.2'
     compileOnly 'org.projectlombok:lombok:1.18.26'
     annotationProcessor 'org.projectlombok:lombok:1.18.26'
     runtimeOnly 'com.h2database:h2'
