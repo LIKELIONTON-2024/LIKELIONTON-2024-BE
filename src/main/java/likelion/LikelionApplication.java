@@ -20,7 +20,7 @@ public class LikelionApplication {
 @Profile("dev")
 class DevEnvLoader {
 	public DevEnvLoader() {
-		Dotenv dotenv = Dotenv.configure().directory("./LIKELIONTON-2024-BE").load();
+		Dotenv dotenv = Dotenv.configure().directory("/home/ec2-user/LIKELIONTON-2024-BE/.env").load();
 
 		for (DotenvEntry entry : dotenv.entries()) {
 			System.setProperty(entry.getKey(), entry.getValue());
