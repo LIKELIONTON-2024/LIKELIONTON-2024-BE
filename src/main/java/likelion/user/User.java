@@ -31,7 +31,7 @@ public class User {
 	private String nickname;
 
 	@Column(nullable = false)
-	private Integer zipCode;
+	private String zipCode;
 
 	private Float latitude;
 
@@ -61,13 +61,13 @@ public class User {
 		this.lastVerifiedDate = LocalDateTime.now();
 	}
 
-	public User(String email, String nickname, Integer zipCode) {
+	public User(String email, String nickname, String zipCode) {
 		this.email = email;
 		this.nickname = nickname;
 		this.zipCode = zipCode;
 	}
 
-	public static User createUser(String email, String nickname, Integer zipCode) {
+	public static User createUser(String email, String nickname, String zipCode) {
 		return new User(email, nickname, zipCode);
 	}
 }
