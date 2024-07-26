@@ -1,7 +1,14 @@
 package likelion.user;
 
 import java.time.LocalDateTime;
-import jakarta.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,9 +31,10 @@ public class User {
 	private String nickname;
 
 	@Column(nullable = false)
+	private Integer zipCode;
+
 	private Float latitude;
 
-	@Column(nullable = false)
 	private Float longitude;
 
 	@Column(nullable = false)
@@ -34,8 +42,6 @@ public class User {
 		"https://likelion-hikikomori.s3.ap-northeast-2.amazonaws.com/basic.png";
 
 	private String userAddress;
-
-	private Integer zipCode;
 
 	private Integer totalChuru;
 
@@ -47,22 +53,21 @@ public class User {
 
 	private LocalDateTime createdDate;
 
-    private LocalDateTime lastVerifiedDate;
+	private LocalDateTime lastVerifiedDate;
 
-    @PrePersist
-    protected void onCreate() {
-        this.createdDate = LocalDateTime.now();
-		this.lastVerifiedDate=LocalDateTime.now();
-    }
-
-	public User(String email, String nickname, Float latitude, Float longitude) {
-		this.email = email;
-		this.nickname = nickname;
-		this.latitude = latitude;
-		this.longitude = longitude;
+	@PrePersist
+	protected void onCreate() {
+		this.createdDate = LocalDateTime.now();
+		this.lastVerifiedDate = LocalDateTime.now();
 	}
 
-	public static User createUser(String email, String nickname, Float latitude, Float longitude) {
-		return new User(email, nickname, latitude, longitude);
+	public User(String email, String nickname, Integer zipCode) {
+		this.email = email;
+		this.nickname = nickname;
+		this.zipCode = zipCode;
+	}
+
+	public static User createUser(String email, String nickname, Integer zipCode) {
+		return new User(email, nickname, zipCode);
 	}
 }
