@@ -38,18 +38,17 @@ public class User {
 	private String longitude;
 
 	@Column(nullable = false)
-	private String userImage =
-		"https://likelion-hikikomori.s3.ap-northeast-2.amazonaws.com/basic.png";
+	private String userImage;
 
 	private String userAddress;
 
-	private Integer totalChuru = 0;
+	private Integer totalChuru;
 
-	private Float totalDistance = 0.0f;
+	private Float totalDistance;
 
-	private Integer totalSpots = 0;
+	private Integer totalSpots;
 
-	private Integer totalVisits = 0;
+	private Integer totalVisits;
 
 	private LocalDateTime createdDate;
 
@@ -65,6 +64,11 @@ public class User {
 		this.email = email;
 		this.nickname = nickname;
 		this.zipCode = zipCode;
+		this.userImage = "https://likelion-hikikomori.s3.ap-northeast-2.amazonaws.com/basic.png";
+		this.totalChuru = 0;
+		this.totalDistance = 0.0f;
+		this.totalSpots = 0;
+		this.totalVisits = 0;
 	}
 
 	public static User createUser(String email, String nickname, String zipCode) {
