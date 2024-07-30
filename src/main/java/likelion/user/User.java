@@ -33,9 +33,9 @@ public class User {
 	@Column(nullable = false)
 	private String zipCode;
 
-	private Float latitude;
+	private String latitude;
 
-	private Float longitude;
+	private String longitude;
 
 	@Column(nullable = false)
 	private String userImage =
@@ -43,13 +43,13 @@ public class User {
 
 	private String userAddress;
 
-	private Integer totalChuru;
+	private Integer totalChuru = 0;
 
-	private Float totalDistance;
+	private Float totalDistance = 0.0f;
 
-	private Integer totalSpots;
+	private Integer totalSpots = 0;
 
-	private Integer totalVisits;
+	private Integer totalVisits = 0;
 
 	private LocalDateTime createdDate;
 
