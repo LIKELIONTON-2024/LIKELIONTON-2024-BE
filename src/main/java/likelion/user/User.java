@@ -1,7 +1,9 @@
 package likelion.user;
 
 import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
+import likelion.address.Address;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,18 +26,17 @@ public class User {
 	private String nickname;
 
 	@Column(nullable = false)
-	private Float latitude;
+	private String zipCode;
+
+	private String latitude;
+
+	private String longitude;
 
 	@Column(nullable = false)
-	private Float longitude;
+	private String userImage;
 
-	@Column(nullable = false)
-	private String userImage =
-		"https://likelion-hikikomori.s3.ap-northeast-2.amazonaws.com/basic.png";
-
-	private String userAddress;
-
-	private Integer zipCode;
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	private Address address;
 
 	private Integer totalChuru;
 
@@ -47,26 +48,26 @@ public class User {
 
 	private LocalDateTime createdDate;
 
-    private LocalDateTime lastVerifiedDate;
+	private LocalDateTime lastVerifiedDate;
 
-    @PrePersist
-    protected void onCreate() {
-        this.createdDate = LocalDateTime.now();
-		this.lastVerifiedDate=LocalDateTime.now();
-		this.totalChuru=0;
-		this.totalDistance=0.0f;
-		this.totalSpots=0;
-		this.totalVisits=0;
-    }
-
-	public User(String email, String nickname, Float latitude, Float longitude) {
-		this.email = email;
-		this.nickname = nickname;
-		this.latitude = latitude;
-		this.longitude = longitude;
+	@PrePersist
+	protected void onCreate() {
+		this.createdDate = LocalDateTime.now();
+		this.lastVerifiedDate = LocalDateTime.now();
 	}
 
-	public static User createUser(String email, String nickname, Float latitude, Float longitude) {
-		return new User(email, nickname, latitude, longitude);
+	public User(String email, String nickname, String zipCode) {
+		this.email = email;
+		this.nickname = nickname;
+		this.zipCode = zipCode;
+		this.userImage = "https://likelion-hikikomori.s3.ap-northeast-2.amazonaws.com/basic.png";
+		this.totalChuru = 0;
+		this.totalDistance = 0.0f;
+		this.totalSpots = 0;
+		this.totalVisits = 0;
+	}
+
+	public static User createUser(String email, String nickname, String zipCode) {
+		return new User(email, nickname, zipCode);
 	}
 }
