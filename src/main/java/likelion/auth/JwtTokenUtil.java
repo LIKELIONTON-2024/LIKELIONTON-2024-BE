@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 
@@ -26,7 +25,7 @@ public class JwtTokenUtil {
 
 	@PostConstruct
 	public void init() {
-		this.key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+		this.key = Keys.hmacShaKeyFor(secret.getBytes());
 	}
 
 	public String getUserIdFromToken(String token) {
