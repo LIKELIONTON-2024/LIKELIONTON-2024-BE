@@ -1,9 +1,30 @@
 package likelion.spot;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import likelion.auth.JwtTokenUtil;
+import likelion.spot.dto.SpotRecommendResponse;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/spot")
 public class SpotController {
+
+    private final SpotService spotService;
+    private final JwtTokenUtil jwtTokenUtil;
+
+    public SpotController(SpotService spotService,JwtTokenUtil jwtTokenUtil){
+        this.spotService=spotService;
+        this.jwtTokenUtil=jwtTokenUtil;
+    }
+
+    @GetMapping("/recommend")
+    public List<SpotRecommendResponse> getRecommendSpots(@RequestHeader("Authorization") String token, @RequestParam(defaultValue = "0.5") double radius){
+        String jwtToken = token.substring(7);
+
+        String userIdStr = jwtTokenUtil.getUserIdFromToken(jwtToken);
+        Long userId = Long.parseLong(userIdStr);
+
+        return spotService.recommendSpots(userId,radius);
+    }
 }

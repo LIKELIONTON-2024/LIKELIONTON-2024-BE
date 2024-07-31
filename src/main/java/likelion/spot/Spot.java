@@ -1,7 +1,7 @@
 package likelion.spot;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import likelion.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,5 +13,23 @@ import lombok.Setter;
 public class Spot {
 
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long spotId;
+
+    private String name;
+    private String address;
+    private String latitude;
+    private String longitude;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public Spot(User user,String name,String address,String latitude,String longitude){
+        this.user=user;
+        this.name=name;
+        this.address=address;
+        this.latitude=latitude;
+        this.longitude=longitude;
+    }
 }

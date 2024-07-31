@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class AddressService {
+
     @Value("${kakao.rest.key}")
     private String kakaoRestKey;
 
