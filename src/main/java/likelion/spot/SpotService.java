@@ -48,13 +48,12 @@ public class SpotService {
             usedCategories.add(category);
             List<Spot> foundSpots = searchSpotsUsingKakaoApi(latitude, longitude, radius, category, user);
 
-            for (Spot spot : foundSpots) {
-                if (spotRecommendResponses.size() >= 3) break;
-                spotRepository.save(spot);  // 저장
+            if (!foundSpots.isEmpty()) {
+                Spot spot = foundSpots.get(0);
+                spotRepository.save(spot);
                 spotRecommendResponses.add(new SpotRecommendResponse(user.getUserId(), spot.getSpotId(), spot.getName(), spot.getLatitude(), spot.getLongitude()));
             }
         }
-
         return spotRecommendResponses;
     }
 
