@@ -25,18 +25,12 @@ public class User {
 	@Column(nullable = false)
 	private String nickname;
 
-	@Column(nullable = false)
-	private String zipCode;
-
-	private String latitude;
-
-	private String longitude;
-
-	@Column(nullable = false)
 	private String userImage;
 
+	private String address;
+
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-	private Address address;
+	private Address addressEntity;
 
 	private Integer totalChuru;
 
@@ -56,10 +50,10 @@ public class User {
 		this.lastVerifiedDate = LocalDateTime.now();
 	}
 
-	public User(String email, String nickname, String zipCode) {
+	public User(String email, String nickname, String address) {
 		this.email = email;
 		this.nickname = nickname;
-		this.zipCode = zipCode;
+		this.address = address;
 		this.userImage = "https://likelion-hikikomori.s3.ap-northeast-2.amazonaws.com/basic.png";
 		this.totalChuru = 0;
 		this.totalDistance = 0.0f;
@@ -67,7 +61,7 @@ public class User {
 		this.totalVisits = 0;
 	}
 
-	public static User createUser(String email, String nickname, String zipCode) {
-		return new User(email, nickname, zipCode);
+	public static User createUser(String email, String nickname, String address) {
+		return new User(email, nickname, address);
 	}
 }
