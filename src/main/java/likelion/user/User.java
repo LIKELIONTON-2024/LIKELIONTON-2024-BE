@@ -53,6 +53,10 @@ public class User {
     protected void onCreate() {
         this.createdDate = LocalDateTime.now();
 		this.lastVerifiedDate=LocalDateTime.now();
+		this.totalChuru=0;
+		this.totalDistance=0.0f;
+		this.totalSpots=0;
+		this.totalVisits=0;
     }
 
 	public User(String email, String nickname, Float latitude, Float longitude) {
