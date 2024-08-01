@@ -30,6 +30,7 @@ dependencies {
     implementation 'org.projectlombok:lombok:1.18.26'
     //  env 읽기 의존성
     implementation 'io.github.cdimascio:java-dotenv:5.2.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
     compileOnly 'org.projectlombok:lombok:1.18.26'
     annotationProcessor 'org.projectlombok:lombok:1.18.26'
     runtimeOnly 'com.h2database:h2'
