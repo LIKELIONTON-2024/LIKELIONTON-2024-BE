@@ -32,17 +32,15 @@ public class User {
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private Address addressEntity;
 
-	private Integer totalChuru;
+	private Integer totalChuru;//총 츄르 개수
 
-	private Float totalDistance;
+	private Float totalDistance;//총 걸은 거리
 
-	private Integer totalSpots;
-
-	private Integer totalVisits;
+	private Integer totalVisits;//총 인증 횟수
 
 	private LocalDateTime createdDate;
 
-	private LocalDateTime lastVerifiedDate;
+	private LocalDateTime lastVerifiedDate;//인증 마지막 날짜
 
 	@PrePersist
 	protected void onCreate() {
@@ -57,7 +55,6 @@ public class User {
 		this.userImage = "https://likelion-hikikomori.s3.ap-northeast-2.amazonaws.com/basic.png";
 		this.totalChuru = 0;
 		this.totalDistance = 0.0f;
-		this.totalSpots = 0;
 		this.totalVisits = 0;
 	}
 
