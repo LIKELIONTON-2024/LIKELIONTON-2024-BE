@@ -57,6 +57,7 @@ public class ItemService {
 
 	@Transactional
 	public void selectItem(Long userId, List<ItemSelectRequest> selections) {
+		User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
 		for (ItemSelectRequest selection : selections) {
 			String type = selection.type();
 			String name = selection.name();
@@ -69,17 +70,28 @@ public class ItemService {
 						throw new IllegalArgumentException("아이템을 먼저 구매해주세요");
 					}
 					item.setSelected(true);
+					if (type.equals("cat")) {
+						setUserImage(user, item);
+					}
 					itemFound = true;
 				} else {
-					System.out.println(item);
 					item.setSelected(false);
 				}
 			}
-
 			if (!itemFound) {
 				throw new IllegalArgumentException("존재하지 않는 아이템입니다.");
 			}
 			itemRepository.saveAll(items);
 		}
+	}
+
+	private void setUserImage(User user, Item item) {
+		String userImage = switch (item.getName()) {
+			case "black" -> "https://likelion-hikikomori.s3.ap-northeast-2.amazonaws.com/black.png";
+			case "gray" -> "https://likelion-hikikomori.s3.ap-northeast-2.amazonaws.com/gray.png";
+			case "white" -> "https://likelion-hikikomori.s3.ap-northeast-2.amazonaws.com/white.png";
+			default -> "https://likelion-hikikomori.s3.ap-northeast-2.amazonaws.com/basic.png";
+		};
+		user.setUserImage(userImage);
 	}
 }
