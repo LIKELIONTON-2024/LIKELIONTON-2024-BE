@@ -2,13 +2,8 @@ package likelion.user;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import likelion.address.Address;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,29 +25,24 @@ public class User {
 	@Column(nullable = false)
 	private String nickname;
 
-	@Column(nullable = false)
-	private String zipCode;
-
-	private String latitude;
-
-	private String longitude;
-
-	@Column(nullable = false)
 	private String userImage;
 
-	private String userAddress;
+	private String userBadge;
 
-	private Integer totalChuru;
+	private String address;
 
-	private Float totalDistance;
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+	private Address addressEntity;
 
-	private Integer totalSpots;
+	private Integer totalChuru;//총 츄르 개수
 
-	private Integer totalVisits;
+	private Float totalDistance;//총 걸은 거리
+
+	private Integer totalVisits;//총 인증 횟수
 
 	private LocalDateTime createdDate;
 
-	private LocalDateTime lastVerifiedDate;
+	private LocalDateTime lastVerifiedDate;//인증 마지막 날짜
 
 	@PrePersist
 	protected void onCreate() {
@@ -60,18 +50,17 @@ public class User {
 		this.lastVerifiedDate = LocalDateTime.now();
 	}
 
-	public User(String email, String nickname, String zipCode) {
+	public User(String email, String nickname, String address) {
 		this.email = email;
 		this.nickname = nickname;
-		this.zipCode = zipCode;
+		this.address = address;
 		this.userImage = "https://likelion-hikikomori.s3.ap-northeast-2.amazonaws.com/basic.png";
 		this.totalChuru = 0;
 		this.totalDistance = 0.0f;
-		this.totalSpots = 0;
 		this.totalVisits = 0;
 	}
 
-	public static User createUser(String email, String nickname, String zipCode) {
-		return new User(email, nickname, zipCode);
+	public static User createUser(String email, String nickname, String address) {
+		return new User(email, nickname, address);
 	}
 }
