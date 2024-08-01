@@ -27,6 +27,8 @@ public class User {
 
 	private String userImage;
 
+	private String userBadge;
+
 	private String address;
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)

@@ -41,6 +41,8 @@ public class VisitService {
         user.setTotalChuru(user.getTotalChuru()+1);
         user.setTotalDistance(user.getTotalDistance()+ visit.getDistance().floatValue());
         user.setTotalVisits(user.getTotalVisits()+1);
+        if(user.getTotalVisits()==1)
+            user.setUserBadge("https://likelion-hikikomori.s3.ap-northeast-2.amazonaws.com/badge.png");
         visitRepository.save(visit);
     }
 
