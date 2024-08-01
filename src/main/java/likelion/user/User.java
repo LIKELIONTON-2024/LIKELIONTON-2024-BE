@@ -2,7 +2,16 @@ package likelion.user;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 import likelion.address.Address;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +25,7 @@ import lombok.Setter;
 public class User {
 
 	@Id
+	@JoinColumn(name = "user_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long userId;
 
@@ -34,15 +44,15 @@ public class User {
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private Address addressEntity;
 
-	private Integer totalChuru;//총 츄르 개수
+	private Integer totalChuru;
 
-	private Float totalDistance;//총 걸은 거리
+	private Float totalDistance;
 
-	private Integer totalVisits;//총 인증 횟수
+	private Integer totalVisits;
 
 	private LocalDateTime createdDate;
 
-	private LocalDateTime lastVerifiedDate;//인증 마지막 날짜
+	private LocalDateTime lastVerifiedDate;
 
 	@PrePersist
 	protected void onCreate() {

@@ -54,13 +54,6 @@ public class JwtTokenUtil {
 			.compact();
 	}
 
-	public String generateAccessToken(Long userId, String nickname, String email) {
-		Map<String, Object> claims = new HashMap<>();
-		claims.put("nickname", nickname);
-		claims.put("email", email);
-		return generateAccessToken(claims, userId.toString());
-	}
-
 	public String generateRefreshToken(Long userId) {
 		return Jwts.builder()
 			.setSubject(userId.toString())

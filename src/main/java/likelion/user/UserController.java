@@ -32,8 +32,8 @@ public class UserController {
 
 	@GetMapping("/profile/{friendId}")
 	public ResponseEntity<UserResponse> getFriendProfile(@PathVariable Long friendId) {
-		UserResponse friendFrofile = userService.getFreiendProfileByFriendId(friendId);
-		return ResponseEntity.ok(friendFrofile);
+		UserResponse friendProfile = userService.getFreiendProfileByFriendId(friendId);
+		return ResponseEntity.ok(friendProfile);
 	}
 
 	@PostMapping("/join")
@@ -42,7 +42,8 @@ public class UserController {
 	}
 
 	@GetMapping("/my")
-	public UserMyPageResponse getMyPage(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+	public UserMyPageResponse getMyPage(@RequestHeader(HttpHeaders.AUTHORIZATION) String accessToken) {
+		String token = accessToken.replace("Bearer ", "");
 		return userService.getMyPage(Long.parseLong(jwtTokenUtil.getUserIdFromToken(token)));
 	}
 }
