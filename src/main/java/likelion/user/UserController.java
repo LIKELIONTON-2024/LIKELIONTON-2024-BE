@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import likelion.auth.JwtTokenUtil;
 import likelion.item.ItemService;
 import likelion.item.dto.ItemGetResponse;
+import likelion.user.dto.UserChuruResponse;
 import likelion.user.dto.UserInventoryResponse;
 import likelion.user.dto.UserJoinRequest;
 import likelion.user.dto.UserJoinResponse;
@@ -47,6 +48,12 @@ public class UserController {
 	@PostMapping("/join")
 	public UserJoinResponse join(@RequestBody UserJoinRequest request) {
 		return userService.join(request);
+	}
+
+	@GetMapping("/churu")
+	public UserChuruResponse getTotalChuru(@RequestHeader(HttpHeaders.AUTHORIZATION) String accessToken) {
+		String token = accessToken.replace("Bearer ", "");
+		return new UserChuruResponse(userService.getTotalChuru(Long.parseLong(jwtTokenUtil.getUserIdFromToken(token))));
 	}
 
 	@GetMapping("/my")
