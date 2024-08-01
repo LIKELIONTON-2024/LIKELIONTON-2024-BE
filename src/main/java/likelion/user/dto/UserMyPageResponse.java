@@ -7,7 +7,6 @@ import likelion.user.User;
 
 public record UserMyPageResponse(
 	String nickname,
-	String userImage,
 	String badgeImage,
 	List<LocalDateTime> visitDays,
 	Integer consecutiveDays,
@@ -18,7 +17,6 @@ public record UserMyPageResponse(
 	public static UserMyPageResponse from(User user, List<LocalDateTime> visitDays, int consecutiveDays) {
 		return new UserMyPageResponse(
 			user.getNickname(),
-			user.getUserImage(),
 			user.getUserBadge(),
 			visitDays,
 			consecutiveDays,
