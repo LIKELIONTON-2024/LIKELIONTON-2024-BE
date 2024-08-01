@@ -24,6 +24,7 @@ public record UserMyPageResponse(
 			consecutiveDays,
 			user.getTotalDistance(),
 			user.getTotalVisits(),
-			user.getCreatedDate(),
+			user.getCreatedDate()
+		);
 	}
 }

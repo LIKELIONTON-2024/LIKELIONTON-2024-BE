@@ -1,6 +1,7 @@
 package likelion.user;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -9,10 +10,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import likelion.address.Address;
+import likelion.item.Item;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,12 +40,19 @@ public class User {
 
 	private String userImage;
 
+	private String inventoryImage;
+
+	private String inventoryBackgroundImage;
+
 	private String userBadge;
 
 	private String address;
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private Address addressEntity;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Item> inventory;
 
 	private Integer totalChuru;
 
@@ -65,6 +75,8 @@ public class User {
 		this.nickname = nickname;
 		this.address = address;
 		this.userImage = "https://likelion-hikikomori.s3.ap-northeast-2.amazonaws.com/basic.png";
+		this.inventoryImage = "https://likelion-hikikomori.s3.ap-northeast-2.amazonaws.com/inventory-default.png";
+		this.inventoryBackgroundImage = "https://likelion-hikikomori.s3.ap-northeast-2.amazonaws.com/default.png";
 		this.totalChuru = 0;
 		this.totalDistance = 0.0f;
 		this.totalVisits = 0;
