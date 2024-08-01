@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import likelion.auth.JwtTokenUtil;
 import likelion.user.dto.UserJoinRequest;
 import likelion.user.dto.UserJoinResponse;
+import likelion.user.dto.UserMyPageResponse;
 import likelion.user.dto.UserResponse;
 
 @Service
@@ -39,6 +40,11 @@ public class UserService {
 		return UserJoinResponse.from(tokens.get("accessToken"), tokens.get("refreshToken"));
 	}
 
+	public UserMyPageResponse getMyPage(Long id) {
+		User user = findById(id);
+		return UserMyPageResponse.from(user);
+	}
+
 	public User findByEmail(String email) {
 		return userRepository.findByEmail(email);
 	}
@@ -46,4 +52,5 @@ public class UserService {
 	public User findById(long userId) {
 		return userRepository.findById(userId).orElse(null);
 	}
+
 }
