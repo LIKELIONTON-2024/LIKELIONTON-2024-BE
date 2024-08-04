@@ -2,6 +2,8 @@ package likelion.friend;
 
 import jakarta.persistence.EntityNotFoundException;
 import likelion.friend.dto.FriendListResponse;
+import likelion.friend.dto.FriendNicknameSearchResponse;
+import likelion.friendrequest.FriendRequestService;
 import likelion.user.User;
 import likelion.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +16,13 @@ public class FriendService {
 
     private final FriendRepository friendRepository;
     private final UserRepository userRepository;
+    private final FriendRequestService friendRequestService;
 
     @Autowired
-    public FriendService(FriendRepository friendRepository,UserRepository userRepository){
+    public FriendService(FriendRepository friendRepository,UserRepository userRepository,FriendRequestService friendRequestService){
         this.friendRepository=friendRepository;
         this.userRepository=userRepository;
+        this.friendRequestService=friendRequestService;
     }
 
     public List<FriendListResponse> getFriendsByUserId(Long userId) {
@@ -32,14 +36,20 @@ public class FriendService {
                 .collect(Collectors.toList());
     }
 
-    public List<FriendListResponse> getUsersBySearchKeyword(String searchKeyword) {
+    public List<FriendNicknameSearchResponse> getUsersBySearchKeyword(Long userId, String searchKeyword) {
         List<User> users = userRepository.findByNicknameIsContaining(searchKeyword);
+        userRepository.findById(userId).ifPresent(users::remove);
+
         return users.stream()
-                .map(user -> new FriendListResponse(
-                        user.getUserId(),
-                        user.getNickname(),
-                        user.getUserImage()
-                ))
+                .map(user -> {
+                    String status = friendRequestService.getFriendRequestStatus(userId, user.getUserId());
+                    return new FriendNicknameSearchResponse(
+                            user.getUserId(),
+                            user.getNickname(),
+                            user.getUserImage(),
+                            status // 상태를 설정
+                    );
+                })
                 .collect(Collectors.toList());
     }
 

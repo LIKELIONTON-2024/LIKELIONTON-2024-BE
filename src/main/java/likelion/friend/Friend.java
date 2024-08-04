@@ -24,4 +24,6 @@ public class Friend {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "friend_id")
     private User friend;
+
+    private String status;
 }
