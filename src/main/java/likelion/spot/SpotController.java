@@ -19,7 +19,7 @@ public class SpotController {
     }
 
     @GetMapping("/recommend")
-    public List<SpotRecommendResponse> getRecommendSpots(@RequestHeader("Authorization") String token, @RequestParam(defaultValue = "0.5") double radius){
+    public List<SpotRecommendResponse> getRecommendSpots(@RequestHeader("Authorization") String token, @RequestParam(defaultValue = "0.2") double radius){
         String jwtToken = token.substring(7);
 
         String userIdStr = jwtTokenUtil.getUserIdFromToken(jwtToken);
